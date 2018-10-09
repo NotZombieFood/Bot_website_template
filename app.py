@@ -2,7 +2,7 @@ from config import Config
 import os
 from forms import LoginForm, RegisterForm
 from texts import Texts
-from flask import Flask, render_template, flash, redirect, url_for
+from flask import Flask, render_template, flash, redirect, url_for, request, send_from_directory
 #from flask_sqlalchemy import SQLAlchemy
 
 
@@ -34,6 +34,10 @@ def chat():
 @app.route('/payments')
 def payments():
     return ''
+
+@app.route('/static/<path:path>')
+def send_static_files(path):
+    return send_from_directory('static', path)
 
 if __name__ == '__main__':
     app.run(debug=True)
