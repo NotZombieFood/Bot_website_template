@@ -9,14 +9,22 @@
             {{ form.hidden_tag() }}
             <p>
                 {{ form.username.label }}<br>
-                {{ form.username(size=32) }}
+                {{ form.username(size=35) }}
             </p>
             <p>
                 {{ form.password.label }}<br>
-                {{ form.password(size=32) }}
+                {{ form.password(size=35) }}
             </p>
             <p>{{ form.submit() }}</p>
         </form>
+        <a href="{{ url_for('register') }}">{{ register_message }}</a>
     </div>
 </section>
+{% if form.password.errors or form.username.errors %}
+<script>
+    window.onload = function () {
+        formFail();
+    };
+</script>
+{% endif %}
 {% endblock %}

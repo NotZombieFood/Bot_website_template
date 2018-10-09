@@ -9,21 +9,26 @@
             {{ form.hidden_tag() }}
             <p>
                 {{ form.username.label }}<br>
-                {{ form.username(size=32) }}
+                {{ form.username(size=35) }}
             </p>
             <p>
                 {{ form.email.label }}<br>
-                {{ form.email(size=52) }}
+                {{ form.email(size=35) }}
             </p>
             <p>
                 {{ form.password.label }}<br>
-                {{ form.password(size=32) }}
+                {{ form.password(size=35) }}
             </p>
             <p>{{ form.submit() }}</p>
         </form>
-        <p>
-            <a href=""></a>
-        </p>
+        <a href="{{ url_for('login') }}">{{ login_message }}</a>
     </div>
 </section>
+{% if form.password.errors or form.username.errors or form.email.errors %}
+<script>
+    window.onload = function () {
+        formFail();
+    };
+</script>
+{% endif %}
 {% endblock %}

@@ -17,7 +17,7 @@ def login():
     if form.validate_on_submit():
         #checkCredentials(form.username.data, form.password.data)
         return redirect('/')
-    return render_template('login.html', title=Texts.login, form=form)
+    return render_template('login.html', title=Texts.login, form=form, register_message = Texts.register_message)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -25,7 +25,7 @@ def register():
     if form.validate_on_submit():
         #registerUser(form.username.data, form.email.data, form.password.data)
         return redirect('/')
-    return render_template('register.html', title=Texts.register, form=form)
+    return render_template('register.html', title=Texts.register, form=form, login_message = Texts.login_message)
 
 @app.route('/')
 def chat():

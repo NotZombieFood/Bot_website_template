@@ -5,3 +5,5 @@ class Texts(object):
     user = 'Usuario'
     email = 'Correo electrónico'
     register = 'Registrarse'
+    register_message = '¿No tienes cuenta? Regístrate.'
+    login_message = '¿Tienes cuenta? Inicia sesión.'
