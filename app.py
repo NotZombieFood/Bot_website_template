@@ -1,6 +1,6 @@
 from config import Config
 import os
-from forms import *
+from forms import LoginForm, RegisterForm
 from texts import Texts
 from flask import Flask, render_template, flash, redirect, url_for
 #from flask_sqlalchemy import SQLAlchemy
@@ -18,8 +18,8 @@ def login():
 
 @app.route('/register')
 def register():
-    return ''
-
+    form = RegisterForm()
+    return render_template('register.html', title=Texts.register, form=form)
 
 @app.route('/')
 def chat():
@@ -30,4 +30,4 @@ def payments():
     return ''
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
