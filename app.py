@@ -11,19 +11,25 @@ app.config.from_object(Config)
 
 #db = SQLAlchemy(app)
  
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    if form.validate_on_submit():
+        #checkCredentials(form.username.data, form.password.data)
+        return redirect('/')
     return render_template('login.html', title=Texts.login, form=form)
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
+    if form.validate_on_submit():
+        #registerUser(form.username.data, form.email.data, form.password.data)
+        return redirect('/')
     return render_template('register.html', title=Texts.register, form=form)
 
 @app.route('/')
 def chat():
-    return ''
+    return 'Homepage'
 
 @app.route('/payments')
 def payments():
