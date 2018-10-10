@@ -1,3 +1,6 @@
+# virtual env stuff
+web_bot/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
