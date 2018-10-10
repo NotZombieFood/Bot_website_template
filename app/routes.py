@@ -1,20 +1,8 @@
-# coding=utf-8
-from config import Config
-import os
+from app import app
+from flask import render_template, redirect, url_for, request, send_from_directory
 from forms import LoginForm, RegisterForm
 from texts import Texts
-from flask import Flask, render_template, flash, redirect, url_for, request, send_from_directory
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-import models
 
-app = Flask(__name__)
-app.config.from_object(Config)
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
-#db = SQLAlchemy(app)
- 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -42,6 +30,3 @@ def payments():
 @app.route('/static/<path:path>')
 def send_static_files(path):
     return send_from_directory('static', path)
-
-if __name__ == '__main__':
-    app.run(debug=True)
