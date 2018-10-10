@@ -1,13 +1,17 @@
+# coding=utf-8
 from config import Config
 import os
 from forms import LoginForm, RegisterForm
 from texts import Texts
 from flask import Flask, render_template, flash, redirect, url_for, request, send_from_directory
-#from flask_sqlalchemy import SQLAlchemy
-
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+import models
 
 app = Flask(__name__)
 app.config.from_object(Config)
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 #db = SQLAlchemy(app)
  
@@ -17,7 +21,7 @@ def login():
     if form.validate_on_submit():
         #checkCredentials(form.username.data, form.password.data)
         return redirect('/')
-    return render_template('login.html', title=Texts.login, form=form, register_message = Texts.register_message)
+    return render_template('login.html', title=Texts.login, form=form, register_message = Texts.register_message, form_error_message = Texts.form_error_message)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -25,7 +29,7 @@ def register():
     if form.validate_on_submit():
         #registerUser(form.username.data, form.email.data, form.password.data)
         return redirect('/')
-    return render_template('register.html', title=Texts.register, form=form, login_message = Texts.login_message)
+    return render_template('register.html', title=Texts.register, form=form, login_message = Texts.login_message, form_error_message = Texts.form_error_message)
 
 @app.route('/')
 def chat():

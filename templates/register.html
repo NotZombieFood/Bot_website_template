@@ -27,7 +27,8 @@
 {% if form.password.errors or form.username.errors or form.email.errors %}
 <script>
     window.onload = function () {
-        formFail();
+        var form_error_message = "{{form_error_message}}";
+        formFail(form_error_message);
     };
 </script>
 {% endif %}
