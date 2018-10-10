@@ -1,7 +1,9 @@
+# coding=utf-8
+
 from app import app
 from flask import render_template, redirect, url_for, request, send_from_directory
-from forms import LoginForm, RegisterForm
-from texts import Texts
+from app.forms import LoginForm, RegisterForm
+from app.texts import Texts
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
