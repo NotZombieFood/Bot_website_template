@@ -1,5 +1,5 @@
 # coding=utf-8
-from app import db
+from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
@@ -23,3 +23,8 @@ class Message(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     def __repr__(self):
         return '<Message {}>'.format(self.message)  
+
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))

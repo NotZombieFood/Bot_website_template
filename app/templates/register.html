@@ -19,6 +19,10 @@
                 {{ form.password.label }}<br>
                 {{ form.password(size=35) }}
             </p>
+            <p>
+                {{ form.password2.label }}<br>
+                {{ form.password2(size=35) }}
+            </p>
             <p>{{ form.submit() }}</p>
         </form>
         <a href="{{ url_for('login') }}">{{ login_message }}</a>
