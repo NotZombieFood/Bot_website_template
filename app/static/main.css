@@ -114,6 +114,11 @@ button:focus {
     justify-content: center;
     align-items: center; 
   }
+
+  .info .logo{
+      width: 250px;
+  }
+  
   .marvel-device .screen {
     text-align: left;
   }

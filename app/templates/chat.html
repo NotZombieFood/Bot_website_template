@@ -3,7 +3,13 @@
 {% block content %}
 <div class="page">
     <div class="info">
-        <div>
+        <div style="text-align: center;">
+                <img class="logo" src="static/logo.png" alt="log">
+                <h1>Testing bot</h1>
+                <h2>Beta Version 0.5</h2>
+                <p>This section is for you to display any important information, may do some extra stuff here.</p>
+                <p>Any request, just create an issue here <a href="https://github.com/NotZombieFood/Bot_website_template/issues">github repository</a></p>
+                <a class="logout" href="{{ url_for('logout') }}">Logout</a>
 
         </div>
     </div>
@@ -93,6 +99,14 @@
     </div>
 </div>
 <script>
+    var deviceTime = document.querySelector('.status-bar .time');
+
+    deviceTime.innerHTML = moment().format('h:mm');
+
+    setInterval(function () {
+        deviceTime.innerHTML = moment().format('h:mm');
+    }, 1000);
+
     function newResponse(response) {
         var message = buildResponse(response);
         conversation.appendChild(message);
