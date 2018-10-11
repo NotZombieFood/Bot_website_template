@@ -6,7 +6,7 @@ from app.forms import LoginForm, RegisterForm
 from app.texts import Texts
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Message
-
+import datetime
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -38,7 +38,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         user_object = User.query.filter_by(username=form.username.data).first()
-        message = Message(direction='bot',message='Hola, soy el bot :)',user_id=user_object.id)
+        message = Message(direction='bot',message='Hola, soy el bot :)',user_id=user_object.id, time='{0:%H:%M}'.format(datetime.datetime.now()))
         db.session.add(message)
         db.session.commit()
         return redirect(url_for('login'))
@@ -47,7 +47,7 @@ def register():
 @app.route('/')
 @login_required
 def chat():
-    return render_template('index.html')
+    return render_template('chat.html',bot_avatar = 'https://image.flaticon.com/icons/svg/1166/1166474.svg',bot_name = Texts.bot_name,bot_status= Texts.bot_status)
 
 @app.route('/payments')
 def payments():

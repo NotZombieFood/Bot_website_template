@@ -21,6 +21,7 @@ class Message(db.Model):
     direction = db.Column(db.String(64))
     message = db.Column(db.String(2500))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    time = db.Column(db.String(6))
     def __repr__(self):
         return '<Message {}>'.format(self.message)  
 

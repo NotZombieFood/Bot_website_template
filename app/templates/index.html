@@ -6,10 +6,10 @@
 
 {% for message in  current_user.message %}
 {% if message.direction == 'bot' %}
-    <p>Bot: {{message.message}}</p>
+    <p>Bot: {{message.message}} {{message.time}}</p>
 {% endif %}
 {% if message.direction == 'user' %}
-    <p>User: {{message.message}}</p>
+    <p>User: {{message.message}}  {{message.time}}</p>
 {% endif %}
 {% endfor %}
 <a href="{{ url_for('logout') }}">Logout</a>

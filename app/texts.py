@@ -13,3 +13,5 @@ class Texts(object):
     form_error_message = html.escape('Por favor rellena todos los campos.')
     user_exists = html.escape('El usuario ya está registrado.')
     email_exists = html.escape('El correo electrónico ya está registrado.')
+    bot_name = html.escape('Bot de prueba')
+    bot_status = html.escape('En línea')
