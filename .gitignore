@@ -1,6 +1,8 @@
 # virtual env stuff
 web_bot/*
 
+# my notes for testing
+notes.txt
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -38,7 +38,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('login'))
-    return render_template('register.html', title=Texts.register, form=form, login_message = Texts.login_message, form_error_message = Texts.form_error_message)
+    return render_template('register.html', title=Texts.register, user_exists = Texts.user_exists , email_exists= Texts.email_exists,form=form, login_message = Texts.login_message, form_error_message = Texts.form_error_message)
 
 @app.route('/')
 @login_required

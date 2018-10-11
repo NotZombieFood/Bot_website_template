@@ -11,3 +11,5 @@ class Texts(object):
     register_message = html.escape('¿No tienes cuenta? Regístrate.')
     login_message = html.escape('¿Tienes cuenta? Inicia sesión.')
     form_error_message = html.escape('Por favor rellena todos los campos.')
+    user_exists = html.escape('El usuario ya está registrado.')
+    email_exists = html.escape('El correo electrónico ya está registrado.')

@@ -14,14 +14,14 @@ class RegisterForm(FlaskForm):
     username = StringField(Texts.user, validators=[DataRequired()])
     email = StringField(Texts.email, validators=[DataRequired(),Email()])
     password = PasswordField(Texts.password, validators=[DataRequired()])
-    password2 = PasswordField(
-        Texts.password, validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField(Texts.register)
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
-            raise ValidationError('user_exists')
+            print('user exists')
+            raise ValidationError(Texts.user_exists)
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
-            raise ValidationError('mail_exists')
+            print('email exists')
+            raise ValidationError(Texts.email_exists)
