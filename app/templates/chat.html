@@ -4,12 +4,13 @@
 <div class="page">
     <div class="info">
         <div style="text-align: center;">
-                <img class="logo" src="static/logo.png" alt="log">
-                <h1>Testing bot</h1>
-                <h2>Beta Version 0.5</h2>
-                <p>This section is for you to display any important information, may do some extra stuff here.</p>
-                <p>Any request, just create an issue here <a href="https://github.com/NotZombieFood/Bot_website_template/issues">github repository</a></p>
-                <a class="logout" href="{{ url_for('logout') }}">Logout</a>
+            <img class="logo" src="static/logo.png" alt="log">
+            <h1>Testing bot</h1>
+            <h2>Beta Version 0.5</h2>
+            <p>This section is for you to display any important information, may do some extra stuff here.</p>
+            <p>Any request, just create an issue here <a href="https://github.com/NotZombieFood/Bot_website_template/issues">github
+                    repository</a></p>
+            <a class="logout" href="{{ url_for('logout') }}">Logout</a>
 
         </div>
     </div>
@@ -149,10 +150,26 @@
         var conversation = $('.conversation-container');
         var message_value = $('.input-msg').val();
         if (message_value) {
+            var user_id = {{currentuser.id}}
             var message = buildMessage(message_value);
             conversation.append(message);
             animateMessage(message);
             $('.input-msg').val('');
+            $.ajax({
+                url: "/messages",
+                data: { "id": id, "message": message},
+                cache: false,
+                contentType: false,
+                processData: false,
+                method: 'GET',
+                type: 'GET', // For jQuery < 1.9
+                success: function (data) {
+                    console.log(data);
+                },
+                failure: function (data) {
+                    console.log(data);
+                }
+            });
             conversation.scrollTop = conversation.scrollHeight;
             $("#status").text("Escribiendo.");
             setTimeout(function () {
@@ -163,6 +180,7 @@
             }, 500);
 
             setTimeout(function () {
+                //newResponse('Chinga tu madre');
                 $("#status").text("En línea");
             }, 1000);
         }

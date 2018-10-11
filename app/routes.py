@@ -1,12 +1,16 @@
 # coding=utf-8
 
 from app import app, db
-from flask import render_template, redirect, url_for, request, send_from_directory
+from flask import render_template, redirect, url_for, request, send_from_directory, request
 from app.forms import LoginForm, RegisterForm
 from app.texts import Texts
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import User, Message
-import datetime
+import datetime, os
+from wit import Wit
+
+WIT_TOKEN = os.environ.get('WIT_KEY')
+client = Wit(access_token=WIT_TOKEN)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -49,9 +53,26 @@ def register():
 def chat():
     return render_template('chat.html',bot_avatar = 'https://image.flaticon.com/icons/svg/1166/1166474.svg',bot_name = Texts.bot_name,bot_status= Texts.bot_status)
 
+# May be adding a payment api for "paid messages", which will be answered by professionals
 @app.route('/payments')
 def payments():
     return ''
+
+@app.route('/messages', methods=['GET'])
+def receive_message():
+    user_id = request.args.get("id")
+    message = request.args.get("message")
+    print (message)
+    #m = Message(direction='user',message=message,user_id=user_id,time = '{0:%H:%M}'.format(datetime.datetime.now()))
+    #db.session.add(m)
+    #db.session.commit()
+    response_message = obtainMessage(message)
+    print (response_message)
+    #m = Message(direction='bot',message=response_message,user_id=user_id,time = '{0:%H:%M}'.format(datetime.datetime.now()))
+    #db.session.add(m)
+    #db.session.commit()
+    return response_message
+
 
 @app.route('/static/<path:path>')
 def send_static_files(path):
@@ -64,3 +85,22 @@ def not_found_error(error):
 @app.errorhandler(500)
 def internal_error(error):
     return render_template('500.html'), 500
+
+# Function for handlin with requests
+def obtainMessage(message):
+  reponse_wit = client.message(message)
+  if (reponse_wit['entities']['intent'][0]['confidence'] > .60):
+    intent = reponse_wit['entities']['intent'][0]['value']
+    if intent == 'cita':
+      response = 'Para agendar una cita por favor comunicate a 3123123131, te atenderemos lo mas pronto posible.'
+    elif intent == 'saludo':
+      response = 'Hola, estamos para atenderte. Podemos ayudarte a concretar una cita, ver eventos pasados o darte mas informacion'
+    elif intent == 'sitio web':
+      response = 'Puedes encontrar esta informarcion en shimaraeventos.com.mx'
+    elif intent == 'llamada':
+      response = 'Puedes llamarnos a los siguientes numeros 13123134141,312312313,1321231321'
+    elif intent == 'servicios':
+      response = 'Estos son nuestros servicios eh'
+  else:
+    response = 'No estamos seguros de como responder este mensaje, trabajamos duro para poder ofrecerte una mejor experiencia'
+  return response
