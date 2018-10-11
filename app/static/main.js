@@ -1,4 +1,4 @@
-function formFail(error_message){
+function formFail(error_message) {
     iziToast.error({
         id: 'error',
         title: 'Error',
@@ -8,3 +8,5 @@ function formFail(error_message){
         icon: 'fas fa-exclamation-triangle'
     });
 }
+
+
