@@ -109,8 +109,9 @@
     }, 1000);
 
     function newResponse(response) {
+        var conversation = $('.conversation-container');
         var message = buildResponse(response);
-        conversation.appendChild(message);
+        conversation.append(message);
         conversation.scrollTop = conversation.scrollHeight;
     }
 
@@ -150,39 +151,49 @@
         var conversation = $('.conversation-container');
         var message_value = $('.input-msg').val();
         if (message_value) {
-            var user_id = {{currentuser.id}}
+            var user_id = {{current_user.id}}
             var message = buildMessage(message_value);
+            console.log(user_id, message_value);
             conversation.append(message);
             animateMessage(message);
             $('.input-msg').val('');
             $.ajax({
-                url: "/messages",
-                data: { "id": id, "message": message},
+                url: "/messages?id=" + user_id + "&message=" + encodeURI(message_value),
                 cache: false,
                 contentType: false,
                 processData: false,
                 method: 'GET',
                 type: 'GET', // For jQuery < 1.9
+                beforeSend: function () {
+                    conversation.scrollTop = conversation.scrollHeight;
+                    $("#status").text("Escribiendo.");
+                    setTimeout(function () {
+                        $("#status").text("Escribiendo..");
+                    }, 250);
+                    setTimeout(function () {
+                        $("#status").text("Escribiendo...");
+                    }, 500);
+                    setTimeout(function () {
+                        $("#status").text("Escribiendo.");
+                    }, 750);
+                    setTimeout(function () {
+                        $("#status").text("Escribiendo..");
+                    }, 1000);
+                    setTimeout(function () {
+                        $("#status").text("Escribiendo...");
+                    }, 1250);
+                    setTimeout(function () {
+                        //newResponse('Chinga tu madre');
+                        $("#status").text("En línea");
+                    }, 1500);
+                },
                 success: function (data) {
-                    console.log(data);
+                    newResponse(data);
                 },
                 failure: function (data) {
                     console.log(data);
                 }
             });
-            conversation.scrollTop = conversation.scrollHeight;
-            $("#status").text("Escribiendo.");
-            setTimeout(function () {
-                $("#status").text("Escribiendo..");
-            }, 250);
-            setTimeout(function () {
-                $("#status").text("Escribiendo...");
-            }, 500);
-
-            setTimeout(function () {
-                //newResponse('Chinga tu madre');
-                $("#status").text("En línea");
-            }, 1000);
         }
     }
     $('html').bind('keypress', function (e) {
