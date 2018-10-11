@@ -5,7 +5,7 @@ from flask import render_template, redirect, url_for, request, send_from_directo
 from app.forms import LoginForm, RegisterForm
 from app.texts import Texts
 from flask_login import current_user, login_user, logout_user, login_required
-from app.models import User
+from app.models import User, Message
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -36,6 +36,10 @@ def register():
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
+        db.session.commit()
+        user_object = User.query.filter_by(username=form.username.data).first()
+        message = Message(direction='bot',message='Hola, soy el bot :)',user_id=user_object.id)
+        db.session.add(message)
         db.session.commit()
         return redirect(url_for('login'))
     return render_template('register.html', title=Texts.register, user_exists = Texts.user_exists , email_exists= Texts.email_exists,form=form, login_message = Texts.login_message, form_error_message = Texts.form_error_message)
