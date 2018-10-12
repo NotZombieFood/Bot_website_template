@@ -22,7 +22,8 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
             form.password.errors.append('Auth_error')
-        login_user(user)
+        else:
+            login_user(user)
         return redirect(url_for('chat'))
     return render_template('login.html', title=Texts.login, form=form, register_message = Texts.register_message, form_error_message = Texts.form_error_message)
 

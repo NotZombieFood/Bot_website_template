@@ -20,12 +20,25 @@
         <a href="{{ url_for('register') }}">{{ register_message }}</a>
     </div>
 </section>
-{% if form.password.errors or form.username.errors %}
+
+{% set  a = 0 %}
+{% for error in  form.password.errors + form.username.errors %}
+{% if error == 'Auth_error' %}
+<script>
+    window.onload = function () {
+        var form_error_message = "Usuario o contraseña incorrecta";
+        formFail(form_error_message);
+    };
+</script>
+{% endif %}
+{% if error == 'This field is required.' and a == 0%}
 <script>
     window.onload = function () {
         var form_error_message = "{{form_error_message}}";
         formFail(form_error_message);
     };
 </script>
+{% set a = 1 %}
 {% endif %}
+{% endfor %}
 {% endblock %}
